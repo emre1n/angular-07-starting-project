@@ -2,6 +2,8 @@ import { Injectable, signal } from '@angular/core';
 
 import type { Task, TaskStatus } from './task.model';
 
+// @NOTE: This is the recommended approach for providing services in Angular.
+// More performant than providing in the root injector.
 @Injectable({
   providedIn: 'root',
 })
