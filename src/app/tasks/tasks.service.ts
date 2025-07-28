@@ -4,6 +4,7 @@ import type { Task, TaskStatus } from './task.model';
 
 // @NOTE: This is the recommended approach for providing services in Angular.
 // More performant than providing in the root injector.
+// One instance of the service will be created for the entire application.
 @Injectable({
   providedIn: 'root',
 })
