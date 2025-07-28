@@ -1,5 +1,6 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 
+import { LoggingService } from '../logging.service';
 import type { Task, TaskStatus } from './task.model';
 
 // @NOTE: This is the recommended approach for providing services in Angular.
@@ -10,6 +11,7 @@ import type { Task, TaskStatus } from './task.model';
 })
 export class TaskService {
   private tasks = signal<Task[]>([]);
+  private loggingService = inject(LoggingService);
 
   allTasks = this.tasks.asReadonly();
 
@@ -21,6 +23,7 @@ export class TaskService {
     };
 
     this.tasks.update((oldTasks) => [...oldTasks, newTask]);
+    this.loggingService.log(`New task added: ${newTask.title}`);
   }
 
   updateTaskStatus(taskId: string, newStatus: TaskStatus) {
@@ -29,5 +32,6 @@ export class TaskService {
         task.id === taskId ? { ...task, status: newStatus } : task
       )
     );
+    this.loggingService.log(`Task status updated: ${taskId} to ${newStatus}`);
   }
 }
